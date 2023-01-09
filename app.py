@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 import PokemonTranslation
+import csv
 
 
 def main():
@@ -8,11 +9,10 @@ def main():
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     pokemon_tables = soup.find_all("table", class_="graytable")
-
+    pokemons: list = []
     for pokemon_table in pokemon_tables:
-        pokemons = pokemon_table.find_all("tr")
-        # TODO: CSV出力
-        print(analyze_pokemon_elements(pokemons))
+        pokemons.extend(analyze_pokemon_elements(pokemon_table.find_all("tr")))
+    write_csv(pokemons)
 
 
 def analyze_pokemon_elements(elements) -> list:
@@ -34,6 +34,26 @@ def analyze_pokemon_elements(elements) -> list:
             )
         )
     return pokemons
+
+
+def write_csv(pokemons: PokemonTranslation.PokemonTranslation):
+    CSV_HEADER: list = ["id", "jpn", "eng", "deu", "fra", "kor", "chs", "cht"]
+    CSV_FILE_NAME: str = "pokemon_translation.csv"
+    with open(CSV_FILE_NAME, "w", encoding="utf-8") as f:
+        writer = csv.writer(f)
+        writer.writerow(CSV_HEADER)
+        for pokemon in pokemons:
+            record: list = [
+                pokemon.id,
+                pokemon.jpn,
+                pokemon.eng,
+                pokemon.deu,
+                pokemon.fra,
+                pokemon.kor,
+                pokemon.chs,
+                pokemon.cht,
+            ]
+            writer.writerow(record)
 
 
 main()
