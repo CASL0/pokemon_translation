@@ -5,6 +5,7 @@ python app.py
 """
 
 import csv
+from typing import List
 import requests
 from bs4 import BeautifulSoup
 import PokemonTranslation
@@ -44,7 +45,7 @@ def analyze_pokemon_elements(elements) -> list:
     return pokemons
 
 
-def write_csv(pokemons: PokemonTranslation.PokemonTranslation):
+def write_csv(pokemons: List[PokemonTranslation.PokemonTranslation]):
     """ポケモン外国語名一覧をCSVとして書き込みます"""
     CSV_HEADER: list = ["id", "jpn", "eng", "deu", "fra", "kor", "chs", "cht"]
     CSV_FILE_NAME: str = "pokemon_translation.csv"
