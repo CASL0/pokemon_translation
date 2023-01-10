@@ -8,7 +8,7 @@
 以下のVSCode拡張をインストールしてください。
 * [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-DevContainerを起動し、以下のコマンドを実行します。
+DevContainerを起動し、以下のコマンドを実行します（またはF5キーを押してください）。
 
 ```python
 python app.py
