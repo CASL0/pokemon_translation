@@ -16,6 +16,7 @@
 				"files.trimFinalNewlines": true,
 				"files.trimTrailingWhitespace": true,
 				"[python]": {
+					"editor.tabSize": 4,
 					"editor.defaultFormatter": "ms-python.black-formatter"
 				}
 			},
