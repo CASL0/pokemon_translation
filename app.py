@@ -50,7 +50,7 @@ def write_csv(pokemons: List[PokemonTranslation.PokemonTranslation]):
     CSV_HEADER: list = ["id", "jpn", "eng", "deu", "fra", "kor", "chs", "cht"]
     CSV_FILE_NAME: str = "pokemon_translation.csv"
     with open(CSV_FILE_NAME, "w", encoding="utf-8") as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f, lineterminator="\n")
         writer.writerow(CSV_HEADER)
         for pokemon in pokemons:
             record: list = [
