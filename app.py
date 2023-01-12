@@ -7,7 +7,7 @@ python app.py
 import csv
 from typing import List
 import requests
-from bs4 import BeautifulSoup
+from bs4 import BeautifulSoup, ResultSet
 import PokemonTranslation
 
 
@@ -17,15 +17,17 @@ def main():
     response = requests.get(url)
     soup = BeautifulSoup(response.text, "html.parser")
     pokemon_tables = soup.find_all("table", class_="graytable")
-    pokemons: list = []
+    pokemons: List[PokemonTranslation.PokemonTranslation] = []
     for pokemon_table in pokemon_tables:
         pokemons.extend(analyze_pokemon_elements(pokemon_table.find_all("tr")))
     write_csv(pokemons)
 
 
-def analyze_pokemon_elements(elements) -> list:
+def analyze_pokemon_elements(
+    elements: ResultSet,
+) -> List[PokemonTranslation.PokemonTranslation]:
     """ポケモン外国語名を解析します"""
-    pokemons: list = []
+    pokemons: List[PokemonTranslation.PokemonTranslation] = []
     for element in elements:
         attributes = element.find_all("td")
         if attributes == []:
