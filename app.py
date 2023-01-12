@@ -5,22 +5,31 @@ python app.py
 """
 
 import csv
+import sys
 from typing import List
 import requests
+from requests.exceptions import Timeout, RequestException
 from bs4 import BeautifulSoup, ResultSet
 import PokemonTranslation
 
 
 def main():
     """wiki/ポケモンの外国語名一覧を解析し、CSV出力します"""
-    url: str = "http://wiki.xn--rckteqa2e.com/wiki/%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E3%81%AE%E5%A4%96%E5%9B%BD%E8%AA%9E%E5%90%8D%E4%B8%80%E8%A6%A7"
-    response = requests.get(url)
-    soup = BeautifulSoup(response.text, "html.parser")
-    pokemon_tables = soup.find_all("table", class_="graytable")
-    pokemons: List[PokemonTranslation.PokemonTranslation] = []
-    for pokemon_table in pokemon_tables:
-        pokemons.extend(analyze_pokemon_elements(pokemon_table.find_all("tr")))
-    write_csv(pokemons)
+    try:
+        url: str = "http://wiki.xn--rckteqa2e.com/wiki/%E3%83%9D%E3%82%B1%E3%83%A2%E3%83%B3%E3%81%AE%E5%A4%96%E5%9B%BD%E8%AA%9E%E5%90%8D%E4%B8%80%E8%A6%A7"
+        response = requests.get(url, timeout=21)
+        soup = BeautifulSoup(response.text, "html.parser")
+        pokemon_tables = soup.find_all("table", class_="graytable")
+        pokemons: List[PokemonTranslation.PokemonTranslation] = []
+        for pokemon_table in pokemon_tables:
+            pokemons.extend(analyze_pokemon_elements(pokemon_table.find_all("tr")))
+        write_csv(pokemons)
+    except Timeout:
+        print(f"request timeout: {url}")
+        sys.exit(1)
+    except RequestException as error:
+        print(f"requests failed: {error}")
+        sys.exit(1)
 
 
 def analyze_pokemon_elements(
