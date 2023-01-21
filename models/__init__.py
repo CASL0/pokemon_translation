@@ -1,0 +1,1 @@
+from .pokemon_translation import PokemonTranslation

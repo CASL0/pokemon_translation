@@ -10,7 +10,7 @@ from typing import List
 import requests
 from requests.exceptions import Timeout, RequestException
 from bs4 import BeautifulSoup, ResultSet
-import PokemonTranslation
+from models import PokemonTranslation
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
         response = requests.get(url, timeout=21)
         soup = BeautifulSoup(response.text, "html.parser")
         pokemon_tables = soup.find_all("table", class_="graytable")
-        pokemons: List[PokemonTranslation.PokemonTranslation] = []
+        pokemons: List[PokemonTranslation] = []
         for pokemon_table in pokemon_tables:
             pokemons.extend(analyze_pokemon_elements(pokemon_table.find_all("tr")))
         write_csv(pokemons)
@@ -34,15 +34,15 @@ def main():
 
 def analyze_pokemon_elements(
     elements: ResultSet,
-) -> List[PokemonTranslation.PokemonTranslation]:
+) -> List[PokemonTranslation]:
     """ポケモン外国語名を解析します"""
-    pokemons: List[PokemonTranslation.PokemonTranslation] = []
+    pokemons: List[PokemonTranslation] = []
     for element in elements:
         attributes = element.find_all("td")
         if attributes == []:
             continue
         pokemons.append(
-            PokemonTranslation.PokemonTranslation(
+            PokemonTranslation(
                 attributes[0].text.rstrip("\n"),
                 attributes[1].a.text.rstrip("\n"),
                 attributes[2].text.rstrip("\n"),
@@ -56,7 +56,7 @@ def analyze_pokemon_elements(
     return pokemons
 
 
-def write_csv(pokemons: List[PokemonTranslation.PokemonTranslation]):
+def write_csv(pokemons: List[PokemonTranslation]):
     """ポケモン外国語名一覧をCSVとして書き込みます"""
     CSV_HEADER: list = ["id", "jpn", "eng", "deu", "fra", "kor", "chs", "cht"]
     CSV_FILE_NAME: str = "pokemon_translation.csv"
