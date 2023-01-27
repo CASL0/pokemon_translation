@@ -6,6 +6,6 @@ services:
     tty: true
     working_dir: /pokemon_translation
     environment:
-      PYTHONPATH: $PYTHONPATH:/pokemon_translation
+      PYTHONPATH: $PYTHONPATH:/pokemon_translation/pokemon_translation
     volumes:
       - ..:/pokemon_translation:delegated
