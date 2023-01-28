@@ -7,10 +7,10 @@ from typing import List
 import requests
 from bs4 import BeautifulSoup, ResultSet
 from models import PokemonTranslation
-from consts import POKEMON_WIKI_URL, CSV_EOL, CSV_ENCODING, CSV_FILE_NAME, CSV_HEADER
+from consts import POKEMON_WIKI_URL, CSV_EOL, CSV_ENCODING, CSV_HEADER
 
 
-def pokemon_wiki_to_csv():
+def pokemon_wiki_to_csv(csv_file: str):
     """
     wiki/ポケモンの外国語名一覧を解析し、CSV出力します
 
@@ -24,7 +24,7 @@ def pokemon_wiki_to_csv():
     pokemons: List[PokemonTranslation] = []
     for pokemon_table in pokemon_tables:
         pokemons.extend(analyze_pokemon_elements(pokemon_table.find_all("tr")))
-    write_csv(pokemons)
+    write_csv(pokemons, csv_file)
 
 
 def analyze_pokemon_elements(
@@ -51,9 +51,9 @@ def analyze_pokemon_elements(
     return pokemons
 
 
-def write_csv(pokemons: List[PokemonTranslation]):
+def write_csv(pokemons: List[PokemonTranslation], file_name: str):
     """ポケモン外国語名一覧をCSVとして書き込みます"""
-    with open(CSV_FILE_NAME, "w", encoding=CSV_ENCODING) as f:
+    with open(file_name, "w", encoding=CSV_ENCODING) as f:
         writer = csv.writer(f, lineterminator=CSV_EOL)
         writer.writerow(CSV_HEADER)
         for pokemon in pokemons:
