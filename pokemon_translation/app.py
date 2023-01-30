@@ -29,6 +29,7 @@ def main():
         update_csv(args.csv)
 
     app = Flask(__name__)
+    app.config["JSON_AS_ASCII"] = False
     app.register_error_handler(BadRequest, handle_bad_request)
     app.register_blueprint(translation_bp, url_prefix="/v1")
     app.run(host="0.0.0.0", port=args.port, debug=args.debug)
