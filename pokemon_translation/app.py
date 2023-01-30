@@ -21,6 +21,9 @@ def main():
     parser.add_argument("--csv", help="出力するCSVファイル名", type=str, default=CSV_FILE_NAME)
     parser.add_argument("--port", help="Flaskのポート", type=int, default=5000)
     parser.add_argument("--update", help="CSVを更新します", action="store_true")
+    parser.add_argument(
+        "--debug", "-d", help="デバッグモードでFlaskを起動します", action="store_true", default=False
+    )
     args = parser.parse_args()
     if args.update:
         update_csv(args.csv)
@@ -28,7 +31,7 @@ def main():
     app = Flask(__name__)
     app.register_error_handler(BadRequest, handle_bad_request)
     app.register_blueprint(translation_bp, url_prefix="/v1")
-    app.run(host="0.0.0.0", port=args.port)
+    app.run(host="0.0.0.0", port=args.port, debug=args.debug)
 
 
 def update_csv(csv_file_name: str) -> bool:
