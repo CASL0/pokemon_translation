@@ -35,7 +35,26 @@ IAM ユーザーには以下のように`PutObject`、`GetObject`が許可され
 
 `http://localhost:5000/v1/translation/{ポケモン名}`を GET することで同ポケモンの翻訳情報を取得できます。
 
-メタモンの翻訳情報を取得する場合は`http://localhost:5000/v1/translation/Ditto`とリクエストしてください。
+例：メタモンの翻訳情報を取得する
+
+リクエスト：`http://localhost:5000/v1/translation/Ditto`
+
+レスポンス：
+
+```json
+{
+  "chs": "百变怪",
+  "cht": "百變怪",
+  "deu": "Ditto",
+  "eng": "Ditto",
+  "fra": "Metamorph",
+  "id": "132",
+  "jpn": "メタモン",
+  "kor": "메타몽"
+}
+```
+
+上記のリクエストパラメーターで`Ditto`と指定した個所を`メタモン`としても同じ結果が得られます。
 
 ポケモン名に指定可能な言語は[対応言語](#対応言語)をご確認ください。
 
