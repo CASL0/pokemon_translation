@@ -1,5 +1,5 @@
 """
-ポケモンの外国語名辞書（CSV形式）を作成します
+ポケモンの外国語名辞書API
 """
 
 import argparse
@@ -14,7 +14,9 @@ from werkzeug.exceptions import BadRequest
 
 
 def main():
-    """wiki/ポケモンの外国語名一覧を解析し、CSV出力します"""
+    """
+    wiki/ポケモンの外国語名一覧から作成したCSVを元に、S3 Selectで翻訳を行うAPIサーバーです
+    """
     parser = argparse.ArgumentParser(description="wiki/ポケモンの外国語名一覧から翻訳します")
     parser.add_argument("--csv", help="出力するCSVファイル名", type=str, default=CSV_FILE_NAME)
     parser.add_argument("--port", help="Flaskのポート", type=int, default=5000)
