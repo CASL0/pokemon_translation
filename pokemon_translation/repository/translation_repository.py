@@ -25,7 +25,4 @@ class TranslationRepository:
         query = f"SELECT * FROM s3object WHERE jpn = '{ name }' OR eng = '{ name }' OR deu = '{ name }' OR fra = '{ name }' OR kor = '{ name }' OR chs = '{ name }' OR cht = '{ name }'"
         result = s3_select(AWS_S3_BUCKET, self.s3_object_key, query)
 
-        if result is None:
-            return None
-
-        return PokemonTranslation.from_json(result)
+        return PokemonTranslation.from_json(result) if result is not None else None

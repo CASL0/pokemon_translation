@@ -61,4 +61,4 @@ def s3_select(bucket: str, s3_key: str, query: str) -> Optional[str]:
         if "Records" in event.keys():
             record = event["Records"]["Payload"]
             payload += record
-    return payload.decode("utf-8").removesuffix(",")
+    return payload.decode("utf-8").removesuffix(",") if len(payload) != 0 else None
