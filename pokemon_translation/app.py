@@ -17,13 +17,14 @@ def main():
     """wiki/ポケモンの外国語名一覧を解析し、CSV出力します"""
     parser = argparse.ArgumentParser(description="wiki/ポケモンの外国語名一覧から翻訳します")
     parser.add_argument("--csv", help="出力するCSVファイル名", type=str, default=CSV_FILE_NAME)
+    parser.add_argument("--port", help="Flaskのポート", type=int, default=5000)
     args = parser.parse_args()
     update_csv(args.csv)
 
     app = Flask(__name__)
     app.register_error_handler(BadRequest, handle_bad_request)
     app.register_blueprint(translation_bp, url_prefix="/v1")
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=args.port)
 
 
 def update_csv(csv_file_name: str) -> bool:
