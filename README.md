@@ -77,3 +77,9 @@ IAM ユーザーには以下のように`PutObject`、`GetObject`が許可され
 [Dev Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)の使用を推奨します。
 
 - python 3.11+
+- beautifulsoup4
+  - Wiki スクレイピングに使用します。
+- boto3
+  - S3 への CSV アップロード、S3 Select に使用します。
+- Flask
+  - API サーバーとして使用します。
