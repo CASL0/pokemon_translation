@@ -18,8 +18,10 @@ def main():
     parser = argparse.ArgumentParser(description="wiki/ポケモンの外国語名一覧から翻訳します")
     parser.add_argument("--csv", help="出力するCSVファイル名", type=str, default=CSV_FILE_NAME)
     parser.add_argument("--port", help="Flaskのポート", type=int, default=5000)
+    parser.add_argument("--update", help="CSVを更新します", action="store_true")
     args = parser.parse_args()
-    update_csv(args.csv)
+    if args.update:
+        update_csv(args.csv)
 
     app = Flask(__name__)
     app.register_error_handler(BadRequest, handle_bad_request)
