@@ -5,6 +5,8 @@ services:
     image: mcr.microsoft.com/devcontainers/python:0-3.11
     tty: true
     working_dir: /pokemon_translation
+    ports:
+      - 5000:5000
     env_file:
       - ../.env
     volumes:
