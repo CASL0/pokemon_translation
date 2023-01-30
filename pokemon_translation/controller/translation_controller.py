@@ -4,6 +4,7 @@
 from flask import Blueprint, jsonify
 from repository import TranslationRepository
 from consts import CSV_FILE_NAME
+from werkzeug.exceptions import BadRequest
 
 translation_repository = TranslationRepository(CSV_FILE_NAME)
 translation_bp = Blueprint("translation_bp", __name__)
@@ -19,5 +20,5 @@ def find_by_name(name: str):
     """
     translation = translation_repository.find_by_name(name=name)
     if translation is None:
-        raise Exception
+        raise BadRequest()
     return jsonify(translation)
