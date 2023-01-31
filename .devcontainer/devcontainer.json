@@ -18,6 +18,7 @@
         "files.insertFinalNewline": true,
         "files.trimFinalNewlines": true,
         "files.trimTrailingWhitespace": true,
+        "cSpell.words": ["pokemon", "pokemons", "consts", "jsonify"],
         "[python]": {
           "editor.tabSize": 4,
           "editor.defaultFormatter": "ms-python.black-formatter"
