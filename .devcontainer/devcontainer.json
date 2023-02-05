@@ -28,7 +28,8 @@
         "streetsidesoftware.code-spell-checker",
         "ms-python.python",
         "ms-python.black-formatter",
-        "esbenp.prettier-vscode"
+        "esbenp.prettier-vscode",
+        "njpwerner.autodocstring"
       ]
     }
   },
